@@ -8,6 +8,8 @@ require_relative 'metybur/middleware/json_middleware'
 require_relative 'metybur/middleware/ping_pong_middleware'
 
 module Metybur
+  attr_writer :client
+
   CONFIG = {
     websocket_client_class: Faye::WebSocket::Client,
     log_level: Logger::INFO,
@@ -39,8 +41,9 @@ module Metybur
 
     def connect_client(client = Metybur::Client.new(@credentials))
       websocket = CONFIG[:websocket_client_class].new(@url)
-      client.websocket = websocket
-      client.connect
+      @client = client
+      @client.websocket = websocket
+      @client.connect
 
       logging_middleware = Metybur::LoggingMiddleware.new
       json_middleware = Metybur::JSONMiddleware.new
@@ -57,10 +60,14 @@ module Metybur
         middleware.inject(event) { |e, mw| mw.close(e) }
 
         # Reconnect
-        connect_client(client)
+        connect_client(@client)
       end
 
-      client
+      @client
+    end
+
+    def close_client
+      @client.close
     end
   end
 end
