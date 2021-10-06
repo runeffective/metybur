@@ -14,6 +14,11 @@ class Metybur::LoggingMiddleware
     event
   end
 
+  def error(event)
+    @logger.error "received error message #{event.message}"
+    event
+  end
+
   def close(event)
     @logger.debug "connection closed (code #{event.code}). #{event.reason}"
     event

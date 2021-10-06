@@ -16,6 +16,10 @@ class Metybur::PingPongMiddleware
     message
   end
 
+  def error(event)
+    event
+  end
+
   def close(event)
     event
   end

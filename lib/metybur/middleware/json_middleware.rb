@@ -7,6 +7,12 @@ class Metybur::JSONMiddleware
     JSON.parse(event.data, symbolize_names: true)
   end
 
+  def error(event)
+    {
+      message: event.message
+    }
+  end
+
   def close(event)
     event
   end
