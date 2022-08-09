@@ -72,4 +72,8 @@ class Metybur::Client
       resubscribe
     end
   end
+
+  def close
+    @websocket.close
+  end
 end
