@@ -76,22 +76,6 @@ module Metybur
 
       websocket.on(:close) do |event|
         middleware.inject(event) { |e, mw| mw.close(e) }
-
-        begin
-          client.close
-        rescue => exception
-          puts "Error to close connection #{exception.message}"
-        end
-
-        # Reconnect
-        if max_retry.nil?
-          connect_client(client)
-        elsif max_retry > retry_count
-          retry_count += 1
-          connect_client(client)
-        else
-          puts "Max Retry exceeded MAX: #{max_retry}; COUNT: #{retry_count}"
-        end
       end
 
       client

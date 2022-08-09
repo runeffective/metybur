@@ -8,9 +8,7 @@ class Metybur::JSONMiddleware
   end
 
   def error(event)
-    {
-      message: event.message
-    }
+    { error: event.message }
   end
 
   def close(event)

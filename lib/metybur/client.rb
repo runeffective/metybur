@@ -73,7 +73,6 @@ class Metybur::Client
     end
   end
 
-
   def close
     @websocket.close
   end
