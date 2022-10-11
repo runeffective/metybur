@@ -11,6 +11,14 @@ class Metybur::Client
     @collections = []
   end
 
+  def on_close(&callback)
+    @websocket.on(:close, &callback)
+  end
+
+  def ping(message, &callback)
+    @websocket.ping(message, &callback)
+  end
+
   def subscribe(record_set_name, *params)
     message = {
       msg: 'sub',
